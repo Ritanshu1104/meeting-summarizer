@@ -99,27 +99,61 @@
 └─────────────────┘ └─────────────────┘
 
 Data Flow
-User uploads audio file via the web interface.
-Frontend sends the file to the FastAPI backend.
-Backend transcribes audio using the Whisper API.
-Transcript is sent to GPT-4o for structured summarization via prompt engineering.
-Validated JSON response is returned to the frontend for display.
+1.User uploads audio file via the web interface.
+2.Frontend sends the file to the FastAPI backend.
+3.Backend transcribes audio using the Whisper API.
+4.Transcript is sent to GPT-4o for structured summarization via prompt engineering.
+5.Validated JSON response is returned to the frontend for display.
+
 📦 Installation
-Prerequisites
+Prerequisites:
 Python 3.11 or higher
 Node.js 18 or higher
 OpenAI API Key (Get one here)
 Git
-Backend Setup
-bash
 
-123456789101112131415161718192021
+Backend Setup:
+# Clone the repository
+git clone https://github.com/[YourGitHub]/meeting-summarizer.git
+cd meeting-summarizer
+
+# Create and activate virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create .env file with your OpenAI API key
+echo "OPENAI_API_KEY=your_api_key_here" > .env
+
+# Start the backend server
+uvicorn app.main:app --reload
+
 The backend will run on http://localhost:8000
-Frontend Setup
-bash
 
-1234567891011
+
+Frontend Setup:
+# Open a new terminal and navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Create .env.local file
+echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > .env.local
+
+# Start the development server
+npm run dev
+
 The frontend will run on http://localhost:3000
+
+
 🚀 Usage
 Web Interface
 Navigate to the application: Open http://localhost:3000 in your browser.
@@ -132,10 +166,12 @@ Summary Tab: View executive summary, key decisions, action items, and open quest
 Transcript Tab: Read the full meeting transcript.
 API Usage
 You can also use the API directly via cURL:
-bash
+curl -X POST "http://localhost:8000/api/v1/meetings/process" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@path/to/your/meeting.mp3"
 
-123
-📚 API Documentation
+
+  📚 API Documentation
 Endpoints
 POST /api/v1/meetings/process
 Process an audio file and return transcript with summary.
@@ -143,10 +179,28 @@ Content-Type: multipart/form-data
 Body: file (required): Audio file
 GET /docs
 Interactive API documentation (Swagger UI) provided automatically by FastAPI.
-📁 Project Structure
-text
 
-12345678910111213141516
+
+📁 Project Structure:
+
+meeting-summarizer/
+├── app/                          # Backend application
+│   ├── core/                     # Core configuration & settings
+│   ├── routers/                  # API route handlers
+│   ├── schemas/                  # Pydantic data models
+│   ├── services/                 # Business logic (ASR & LLM)
+│   └── main.py                   # FastAPI app initialization
+├── frontend/                     # Next.js frontend
+│   ├── src/
+│   │   ├── app/                  # Next.js app router pages
+│   │   ├── components/           # React UI components
+│   │   └── types/                # TypeScript interfaces
+│   └── public/                   # Static assets
+├── .env.example                  # Environment variable template
+├── requirements.txt              # Python dependencies
+└── README.md                     # Project documentation
+
+
 🎯 Evaluation Criteria
 This project is built to specifically address and excel in the following evaluation metrics:
 ✅ Transcription Accuracy
@@ -163,8 +217,27 @@ Validation: Pydantic models validate the LLM output before it reaches the fronte
 Modular Architecture: Strict separation of concerns (Routers, Services, Schemas, Core).
 Type Safety: TypeScript on the frontend and Pydantic on the backend ensure end-to-end type safety.
 Clean Code: Follows PEP 8, uses async/await for non-blocking I/O, and includes comprehensive error handling.
+
+
 🐛 Troubleshooting
 1. "ModuleNotFoundError: No module named 'app'"
 Make sure you are in the root meeting-summarizer directory when running the uvicorn command.
 2. "OpenAI API key not found"
 Ensure your .env file is in the root directory and contains OPENAI_API_KEY=sk-....
+3. Frontend CORS errors
+Ensure the backend is running on port 8000. The CORS middleware in app/main.py is configured to allow all origins for development.
+4. File upload fails
+Check that the file size is under 25MB (Whisper API limit).
+Verify the file format is supported (mp3, wav, m4a, mp4, webm).
+
+
+📄 License
+This project is licensed under the MIT License. See the LICENSE file for details.
+👥 Author
+[Your Name]
+GitHub: @https://github.com/Ritanshu1104
+Email: ritanshupm@gmail.com
+<div align="center">
+
+Made with ❤️ using FastAPI, Next.js, and OpenAI
+⭐ Star this repo if you find it useful!
