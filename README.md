@@ -87,16 +87,27 @@
 ## 🏗️ Architecture
 
 ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
+
 │ Frontend │────▶│ Backend API │────▶│ OpenAI API │
+
 │ (Next.js) │────│ (FastAPI) │◀────│ (Whisper+GPT) │
+
 └─────────────────┘ └─────────────────┘ └─────────────────┘
+
 │ │
+
 │ │
+
 ▼ ▼
+
 ┌─────────────────┐ ┌─────────────────┐
+
 │ User Upload │ │ Temp Storage │
+
 │ (Audio File) │ │ (Processing) │
+
 └─────────────────┘ └─────────────────┘
+
 
 Data Flow
 1.User uploads audio file via the web interface.
@@ -185,34 +196,60 @@ Interactive API documentation (Swagger UI) provided automatically by FastAPI.
 
 meeting-summarizer/
 ├── app/                          # Backend application
-│   ├── core/                     # Core configuration & settings
+│   ├── __init__.py
+│   ├── main.py                   # FastAPI app initialization
+│   ├── core/                     # Core configuration
+│   │   ├── __init__.py
+│   │   └── config.py             # Environment settings
 │   ├── routers/                  # API route handlers
-│   ├── schemas/                  # Pydantic data models
-│   ├── services/                 # Business logic (ASR & LLM)
-│   └── main.py                   # FastAPI app initialization
+│   │   ├── __init__.py
+│   │   └── meetings.py           # Meeting endpoints
+│   ├── schemas/                  # Pydantic models
+│   │   ├── __init__.py
+│   │   └── meeting.py            # Data schemas
+│   ── services/                 # Business logic
+│       ├── __init__.py
+│       ├── asr_service.py        # Whisper API integration
+│       └── llm_service.py        # GPT integration
 ├── frontend/                     # Next.js frontend
 │   ├── src/
-│   │   ├── app/                  # Next.js app router pages
-│   │   ├── components/           # React UI components
-│   │   └── types/                # TypeScript interfaces
-│   └── public/                   # Static assets
-├── .env.example                  # Environment variable template
+│   │   ├── app/                  # Next.js app router
+│   │   │   ├── globals.css       # Global styles
+│   │   │   ├── layout.tsx        # Root layout
+│   │   │   └── page.tsx          # Home page
+│   │   ├── components/           # React components
+│   │   │   ├── FileUpload.tsx    # Upload component
+│   │   │   ├── SummaryView.tsx   # Summary display
+│   │   │   └── TranscriptView.tsx # Transcript display
+│   │   └── types/                # TypeScript types
+│   │       └── index.ts
+│   ├── public/                   # Static assets
+│   ├── .env.local                # Frontend environment
+│   ├── next.config.js            # Next.js config
+│   ├── package.json
+│   └── tailwind.config.ts        # Tailwind config
+├── .env.example                  # Environment template
 ├── requirements.txt              # Python dependencies
-└── README.md                     # Project documentation
+├── README.md                     # This file
+└── LICENSE                       # MIT License
 
 
 🎯 Evaluation Criteria
 This project is built to specifically address and excel in the following evaluation metrics:
+
 ✅ Transcription Accuracy
 Implementation: Utilizes OpenAI's whisper-1 model, currently the industry standard for robust speech recognition.
 Optimization: Handles various audio formats and provides high fidelity even with minor background noise.
+
 ✅ Summary Quality
 Action-Oriented: The LLM is explicitly prompted to extract actionable insights rather than just summarizing text.
 Context-Aware: Maintains meeting context, clearly separating decisions from open questions.
+
 ✅ LLM Prompt Effectiveness
 Structured Extraction: Uses response_format={ "type": "json_object" } to guarantee valid JSON output.
 Prompt Engineering: Implements a strict system prompt with clear rules (e.g., handling missing assignees/deadlines).
 Validation: Pydantic models validate the LLM output before it reaches the frontend, preventing UI crashes.
+
 ✅ Code Structure
 Modular Architecture: Strict separation of concerns (Routers, Services, Schemas, Core).
 Type Safety: TypeScript on the frontend and Pydantic on the backend ensure end-to-end type safety.
@@ -233,9 +270,10 @@ Verify the file format is supported (mp3, wav, m4a, mp4, webm).
 
 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
+
 👥 Author
-[Your Name]
-GitHub: @https://github.com/Ritanshu1104
+Ritanshu Mahajan
+GitHub: @github.com/Ritanshu1104
 Email: ritanshupm@gmail.com
 <div align="center">
 

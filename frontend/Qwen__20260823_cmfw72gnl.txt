@@ -1,0 +1,38 @@
+meeting-summarizer/
+├── app/                          # Backend application
+│   ├── __init__.py
+│   ├── main.py                   # FastAPI app initialization
+│   ├── core/                     # Core configuration
+│   │   ├── __init__.py
+│   │   └── config.py             # Environment settings
+│   ├── routers/                  # API route handlers
+│   │   ├── __init__.py
+│   │   └── meetings.py           # Meeting endpoints
+│   ├── schemas/                  # Pydantic models
+│   │   ├── __init__.py
+│   │   └── meeting.py            # Data schemas
+│   ── services/                 # Business logic
+│       ├── __init__.py
+│       ├── asr_service.py        # Whisper API integration
+│       └── llm_service.py        # GPT integration
+├── frontend/                     # Next.js frontend
+│   ├── src/
+│   │   ├── app/                  # Next.js app router
+│   │   │   ├── globals.css       # Global styles
+│   │   │   ├── layout.tsx        # Root layout
+│   │   │   └── page.tsx          # Home page
+│   │   ├── components/           # React components
+│   │   │   ├── FileUpload.tsx    # Upload component
+│   │   │   ├── SummaryView.tsx   # Summary display
+│   │   │   └── TranscriptView.tsx # Transcript display
+│   │   └── types/                # TypeScript types
+│   │       └── index.ts
+│   ├── public/                   # Static assets
+│   ├── .env.local                # Frontend environment
+│   ├── next.config.js            # Next.js config
+│   ├── package.json
+│   └── tailwind.config.ts        # Tailwind config
+├── .env.example                  # Environment template
+├── requirements.txt              # Python dependencies
+├── README.md                     # This file
+└── LICENSE                       # MIT License
