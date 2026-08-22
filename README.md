@@ -273,8 +273,11 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 👥 Author
 Ritanshu Mahajan
+
 GitHub: @github.com/Ritanshu1104
+
 Email: ritanshupm@gmail.com
+  
 <div align="center">
 
 Made with ❤️ using FastAPI, Next.js, and OpenAI
