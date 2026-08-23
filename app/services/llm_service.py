@@ -1,9 +1,10 @@
 import json
-from openai import OpenAI
+from groq import Groq
 from app.core.config import settings
 from app.schemas.meeting import MeetingSummary
 
-client = OpenAI(api_key=settings.OPENAI_API_KEY)
+# Initialize Groq client
+client = Groq(api_key=settings.GROQ_API_KEY)
 
 SYSTEM_PROMPT = """
 You are an expert executive assistant and project manager. 
@@ -43,11 +44,11 @@ Return the data in this exact JSON structure:
 """
 
 async def generate_summary(transcript: str) -> MeetingSummary:
-    """Generates a structured summary from a transcript using an LLM."""
+    """Generates a structured summary from a transcript using Groq (Free)."""
     user_prompt = USER_PROMPT_TEMPLATE.format(transcript=transcript)
     
     response = client.chat.completions.create(
-        model=settings.OPENAI_MODEL,
+        model=settings.LLM_MODEL,
         response_format={ "type": "json_object" }, # Forces valid JSON output
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},

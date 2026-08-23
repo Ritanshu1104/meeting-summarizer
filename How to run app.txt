@@ -1,0 +1,12 @@
+# IN meeting-summarizer FOLDER
+
+conda activate myenv
+
+uvicorn app.main:app --reload
+
+
+# IN FRONTEND FOLDER
+
+conda activate myenv
+
+npm run dev

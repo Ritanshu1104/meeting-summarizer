@@ -1,5 +1,6 @@
 import uuid
 import os
+import tempfile # <--- ADD THIS IMPORT
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from app.services.asr_service import transcribe_audio
 from app.services.llm_service import generate_summary
@@ -16,9 +17,12 @@ async def process_meeting(file: UploadFile = File(...)):
     if ext not in ALLOWED_EXTENSIONS:
         raise HTTPException(status_code=400, detail=f"Unsupported format. Allowed: {ALLOWED_EXTENSIONS}")
 
-    # 2. Save file temporarily
+    # 2. Save file temporarily (CROSS-PLATFORM FIX)
     file_id = str(uuid.uuid4())
-    temp_file_path = f"/tmp/{file_id}_{file.filename}"
+    
+    # Use tempfile.gettempdir() to get the correct temp folder for Windows/Mac/Linux
+    temp_dir = tempfile.gettempdir() 
+    temp_file_path = os.path.join(temp_dir, f"{file_id}_{file.filename}")
     
     try:
         with open(temp_file_path, "wb") as buffer:

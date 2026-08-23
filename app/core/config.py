@@ -2,9 +2,11 @@ from pydantic_settings import BaseSettings
 from functools import lru_cache
 
 class Settings(BaseSettings):
-    OPENAI_API_KEY: str
-    OPENAI_MODEL: str = "gpt-4o"
-    WHISPER_MODEL: str = "whisper-1"
+    GROQ_API_KEY: str
+    LLM_MODEL: str = "openai/gpt-oss-120b"
+    WHISPER_MODEL_SIZE: str = "base"
+    WHISPER_DEVICE: str = "cpu"
+    WHISPER_COMPUTE_TYPE: str = "int8"
     
     class Config:
         env_file = ".env"
