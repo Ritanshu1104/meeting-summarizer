@@ -57,7 +57,7 @@
 
 **Live Demo:** [Coming Soon]
 
-**Video Demo:** [Watch Demo Video](./demo.mp4)
+**Video Demo:** [Watch Demo Video](./assets/meeting-summarizer-demo.mp4)
 
 ---
 
