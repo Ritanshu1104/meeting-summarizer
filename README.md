@@ -66,7 +66,7 @@ flowchart LR
 7. Results are displayed in the Next.js frontend
 8. Temporary files are automatically cleaned up
 
-**Video Demo:** [Watch Demo Video](./assets/meeting-summarizer-demo.mp4)
+**Video Demo:** [Watch Demo Video](https://drive.google.com/file/d/1gxJSACYAcc8-BgMWOYTva-t7cu5PEF3_/view?usp=sharing)
 
 ---
 
